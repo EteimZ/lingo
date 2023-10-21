@@ -31,3 +31,9 @@ npm run dev
 ```
 
 It is a vite application possibly running on `http://localhost:5173`.
+
+## Resources
+
+- The current implementation of this application is based on the socket.io [private messaging example](https://socket.io/get-started/private-messaging-part-1/). Subsequently the architecture will be changed.
+
+- React setup for socket.io is [here](https://socket.io/how-to/use-with-react) 
