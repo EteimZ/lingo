@@ -10,7 +10,6 @@ const io = new Server(httpServer, {
 
 io.use((socket, next) => {
   const username = socket.handshake.auth.username;
-  console.log('Username:', username)
   if (!username) {
     return next(new Error("invalid username"));
   }
@@ -27,7 +26,7 @@ io.on("connection", (socket) => {
       username: socket.data.username,
     });
   }
-  console.log(users)
+
   socket.emit("users", users);
 
   // notify existing users
@@ -38,9 +37,6 @@ io.on("connection", (socket) => {
 
   // forward the private message to the right recipient
   socket.on("private message", ({ content, to }) => {
-    console.log("I am sending a private message.")
-    console.log("Content:", content)
-    console.log("To:", to)
     socket.to(to).emit("private message", {
       content,
       from: socket.id,
