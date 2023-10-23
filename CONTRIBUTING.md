@@ -10,15 +10,12 @@ Fork the repo [here](https://github.com/EteimZ/lingo)
 
 Clone your own forked version locally.
 
-Create a branch on your local repo. The branch name should have the prefix of `feature-`. 
-The second part could be anything you choose but it's name should be in line with the feature you are adding.
-
-For example if you are adding a login feature, the branch name should be `feature-login`.
+Create a branch on your local repo:
 
 ```bash
-git branch -m feature-login
+git branch -m feature-name
 ```
 
 All of your changes should be made on that branch.
 
-When you feature is ready, make a push to your forked repo on github and make a PR from there to this repo.
+When your feature is ready, make a push to your forked repo on github and make a PR from there to this repo.
