@@ -7,6 +7,7 @@ import socket from "../socket";
 interface Message {
   content: string;
   userID: string;
+  fromSelf: boolean;
 }
 
 function ChatDetail() {
@@ -17,7 +18,7 @@ function ChatDetail() {
 
   useEffect(() => {
     socket.on("private message", ({ content, from }) => {
-      setMessages([...messages, { content, userID: from }]);
+      setMessages([...messages, { content, userID: from, fromSelf: false }]);
     });
   });
 
@@ -26,7 +27,7 @@ function ChatDetail() {
       content,
       to: userID,
     });
-    setMessages([...messages, { content, userID: socket.id }]);
+    setMessages([...messages, { content, userID: socket.id, fromSelf: true }]);
     setText("");
   }
 

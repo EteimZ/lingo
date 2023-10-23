@@ -5,7 +5,7 @@ import {
   HStack,
   AbsoluteCenter,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import socket from "./socket";
@@ -13,6 +13,24 @@ import socket from "./socket";
 function App() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
+
+  useEffect(()=>{
+    const sessionID = localStorage.getItem("sessionID");
+
+    if (sessionID) {
+      socket.auth = { sessionID };
+      socket.connect();
+      navigate("list")
+    }
+
+    socket.on("session", ({ sessionID, userID }) => {
+      socket.auth = { sessionID };
+
+      localStorage.setItem("sessionID", sessionID);
+      //navigate("list");
+    })
+
+  })
 
   function submitUsername(){
     socket.auth = { username };
