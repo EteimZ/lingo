@@ -11,16 +11,33 @@ interface Message {
 }
 
 function ChatDetail() {
-  const { userID } = useParams();
+  const { userID, username } = useParams();
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
 
   useEffect(() => {
+    const yourID = localStorage.getItem("userID");
+    
+    fetch(`http://localhost:4000/messages/${userID}/${yourID}`) // Replace with the actual API URL
+      .then((response) => response.json())
+      .then((data) => {
+        setMessages(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [userID]);
+
+  useEffect(() => {
     socket.on("private message", ({ content, from }) => {
       setMessages([...messages, { content, userID: from, fromSelf: false }]);
     });
-  });
+
+    return () => {
+      socket.off("private message");
+    };
+  }, [messages]);
 
   function sendMessage(content: string) {
     socket.emit("private message", {
@@ -37,7 +54,7 @@ function ChatDetail() {
         <Box mb={10} flex={1} overflow="auto">
           {messages.map((message, index) => (
             <div key={index}>
-              <strong>{message.userID}: </strong>
+              <strong>{ message.fromSelf ?  "You" : username }: </strong> 
               {message.content}
             </div>
           ))}

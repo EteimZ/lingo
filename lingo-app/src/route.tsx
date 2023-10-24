@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
         element: <ChatList/>,
     },
     {
-        path: "detail/:userID",
+        path: "detail/:username/:userID",
         element: <ChatDetail/>
     }
     

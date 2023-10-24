@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import socket from "../socket";
 
-interface Users{
+interface Users {
   username: string;
   userID: string;
 }
@@ -16,12 +16,11 @@ function ChatList() {
 
   useEffect(() => {
     socket.on("users", (users_from) => {
-      console.log(users_from);
       setUsers(users_from);
     });
 
     socket.on("user connected", (user_in) => {
-      setUsers([...users, user_in])
+      setUsers([...users, user_in]);
     });
 
     return () => {
@@ -45,7 +44,7 @@ function ChatList() {
           mx={2}
           my={2}
           key={index}
-          onClick={() => navigate(`/detail/${userID}`)}
+          onClick={() => navigate(`/detail/${username}/${userID}`)}
         >
           <Avatar
             name={username}

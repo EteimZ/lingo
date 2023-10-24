@@ -27,6 +27,7 @@ function App() {
       socket.auth = { sessionID };
 
       localStorage.setItem("sessionID", sessionID);
+      localStorage.setItem("userID", userID);
       //navigate("list");
     })
 
