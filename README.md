@@ -4,7 +4,10 @@ A chat application
 
 ## Features 
 
-- Direct messaging
+- Direct messaging: Users can directly to one another.
+- Presence: Users can see when other users are online.
+- User session: The user session gets maintained across tabs. This currently maintained in memory on the server.
+- Message persistence: User messages are persisted in memory on the server.
 
 ## Technologies
 
