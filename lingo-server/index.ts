@@ -14,10 +14,10 @@ import cors from 'cors';
 const app = express();
 
 // create http server
-const httpServer = createServer();
+const chatServer = createServer();
 
 // create an instance of socket.io
-const io = new Server(httpServer, {
+const io = new Server(chatServer, {
   cors: {
     origin: "http://localhost:5173",
   },
@@ -54,6 +54,13 @@ io.use((socket, next) => {
       socket.data.sessionID = sessionID;
       socket.data.userID = session.userID;
       socket.data.username = session.username;
+      
+      // update session detail to true
+      sessionStore.saveSession(socket.data.sessionID, {
+        userID: socket.data.userID,
+        username: socket.data.username,
+        connected: true,
+      });
       return next();
     }
   }
@@ -141,7 +148,7 @@ io.on("connection", (socket) => {
 
 const PORT = process.env.PORT || 3000;
 
-httpServer.listen(PORT, () =>
+chatServer.listen(PORT, () =>
   console.log(`Chat server listening at http://localhost:${PORT}`)
 );
 
