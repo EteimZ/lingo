@@ -50,33 +50,33 @@ function ChatDetail() {
 
   return (
     <>
-      <Flex direction="column" h="95vh" padding={4}>
-        <Box mb={10} flex={1} overflow="auto">
-          {messages.map((message, index) => (
-            <div key={index}>
-              <strong>{ message.fromSelf ?  "You" : username }: </strong> 
-              {message.content}
-            </div>
-          ))}
-        </Box>
-        <Box pos="absolute" left={0} bottom={0} right={0}>
-          <HStack paddingX={10}>
-            <Input
-              value={text}
-              placeholder="Enter message"
-              style={{ backgroundColor: "white" }}
-              onChange={(event) => setText(event.target.value)}
-            />
-            <Button
-              onClick={() => sendMessage(text)}
-              isDisabled={text === ""}
-              colorScheme="green"
-            >
-              Send
-            </Button>
-          </HStack>
-        </Box>
-      </Flex>
+      <Flex direction="column" h="100vh" padding={4} position={"relative"}>
+          <Box mb={10} flex={1} overflow="auto">
+            {messages.map((message, index) => (
+              <Box key={index} border={"1px"} borderRadius={"2xl"} marginBottom={"1.5"} maxWidth={"280px"} wordBreak={"break-word"} padding={"3"} color={"whiteAlpha.800"} borderColor={"black"}>
+                <strong>{message.fromSelf ?  "You:" : username} </strong>
+                {message.content}
+              </Box>
+            ))}
+          </Box>
+          <Box pos="absolute" left={0} bottom={1} right={0}>
+            <HStack paddingX={10}>
+              <Input
+                value={text}
+                placeholder="Enter message"
+                style={{ backgroundColor: "white" }}
+                onChange={(event) => setText(event.target.value)}
+              />
+              <Button
+                onClick={() => sendMessage(text)}
+                isDisabled={text === ""}
+                colorScheme="green"
+              >
+                Send
+              </Button>
+            </HStack>
+          </Box>
+        </Flex>
     </>
   );
 }
