@@ -1,6 +1,5 @@
 import { Button, Box, Flex, HStack, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import socket from "../socket";
 
@@ -10,8 +9,12 @@ interface Message {
   fromSelf: boolean;
 }
 
-function ChatDetail() {
-  const { userID, username } = useParams();
+interface UserDetailProps {
+  userID: string;
+  username: string;
+}
+
+function ChatDetail({ userID, username }: UserDetailProps) {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [text, setText] = useState("");
