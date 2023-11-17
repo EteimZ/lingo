@@ -1,6 +1,6 @@
 import { Avatar, AvatarBadge, Center, HStack, Heading, Box, Grid, GridItem, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import ChatDetail from "./ChatDetail";
+import ChatDetail from "../components/ChatDetail";
 
 import socket from "../socket";
 
@@ -13,8 +13,20 @@ interface User {
 function ChatList() {
 
   const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser  ] = useState({username: "", userID: ""})
 
   useEffect(() => {
+    const sessionID = localStorage.getItem("sessionID");
+
+    if (!socket.connected){
+      console.log("Not connected!")
+      socket.auth = { sessionID };
+      socket.connect();
+
+    } else{
+      console.log("Connected!")
+    }
+
     socket.on("users", (users_from) => {
       console.log(users_from)
       setUsers(users_from);
@@ -62,7 +74,7 @@ function ChatList() {
         <Center>
           <Heading color="green.400">List of chats</Heading>
         </Center>
-        {users.map(({ username, connected }, index) => (
+        {users.map(({ username, userID, connected }, index) => (
           <HStack
             boxShadow="base"
             borderColor="green.200"
@@ -72,6 +84,7 @@ function ChatList() {
             mx={2}
             my={2}
             key={index}
+            onClick={() => setSelectedUser({"username": username, "userID": userID })}
           >
             <Avatar
             name={username}
@@ -86,7 +99,7 @@ function ChatList() {
         </GridItem>
   
         <GridItem bg={"teal.600"}>
-        <ChatDetail/>
+        <ChatDetail username={selectedUser.username} userID = {selectedUser.userID}/>
         </GridItem>
 
         </Grid>
